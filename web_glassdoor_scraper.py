@@ -22,8 +22,8 @@ def get_jobs(keyword, num_jobs, verbose, path, slp_time):
     driver = webdriver.Chrome(executable_path=path, options=options)
     driver.set_window_size(1120, 1000)
     
-    url = 'https://www.glassdoor.co.in/Job/data-scientist-jobs-SRCH_KO0,14.htm?suggestCount=0&suggestChosen=false&clickSource=searchBtn&typedKeyword=&typedLocation=&context=Jobs&dropdown=0'
-    # url = "https://www.glassdoor.com/Job/jobs.htm?suggestCount=0&suggestChosen=false&clickSource=searchBtn&typedKeyword="+keyword+"&sc.keyword="+keyword+"&locT=&locId=&jobType="
+    # url = 'https://www.glassdoor.co.in/Job/data-scientist-jobs-SRCH_KO0,14.htm?suggestCount=0&suggestChosen=false&clickSource=searchBtn&typedKeyword=&typedLocation=&context=Jobs&dropdown=0'
+    url = "https://www.glassdoor.com/Job/jobs.htm?suggestCount=0&suggestChosen=false&clickSource=searchBtn&typedKeyword="+keyword+"&sc.keyword="+keyword+"&locT=&locId=&jobType="
     #url = 'https://www.glassdoor.com/Job/jobs.htm?sc.keyword="' + keyword + '"&locT=C&locId=1147401&locKeyword=San%20Francisco,%20CA&jobType=all&fromAge=-1&minSalary=0&includeNoSalaryJobs=true&radius=100&cityId=-1&minRating=0.0&industryId=-1&sgocId=-1&seniorityType=all&companyId=-1&employerSizes=0&applicationType=0&remoteWorkType=0'
     driver.get(url)
     jobs = []
@@ -84,7 +84,7 @@ def get_jobs(keyword, num_jobs, verbose, path, slp_time):
 
 
             try:
-                salary_estimate = driver.find_element_by_xpath('//span[@data-test="detailSalary"]').text
+                salary_estimate = driver.find_element_by_xpath('.//span[@data-test="detailSalary"]').text
                 # print('salary sucess')
             except NoSuchElementException:
                 # print('salary failed')
@@ -124,6 +124,7 @@ def get_jobs(keyword, num_jobs, verbose, path, slp_time):
                 for label_element in label_elements:
                             
                     try:
+                        size = -1
                         if label_element.text == "Size":
                             value_element = label_element.find_element_by_xpath('following-sibling::span')
                             size = value_element.text
@@ -132,6 +133,7 @@ def get_jobs(keyword, num_jobs, verbose, path, slp_time):
                         size = -1
 
                     try:
+                        founded = -1
                         if label_element.text == "Founded":
                             value_element = label_element.find_element_by_xpath('following-sibling::span')
                             founded = value_element.text
@@ -139,6 +141,7 @@ def get_jobs(keyword, num_jobs, verbose, path, slp_time):
                         founded = -1
 
                     try:
+                        type_of_ownership = -1
                         if label_element.text == "Type":
                             value_element = label_element.find_element_by_xpath('following-sibling::span')
                             type_of_ownership = value_element.text
@@ -146,6 +149,7 @@ def get_jobs(keyword, num_jobs, verbose, path, slp_time):
                         type_of_ownership = -1
 
                     try:
+                        industry = -1
                         if label_element.text == "Industry":
                             value_element = label_element.find_element_by_xpath('following-sibling::span')
                             industry = value_element.text
@@ -153,6 +157,7 @@ def get_jobs(keyword, num_jobs, verbose, path, slp_time):
                         industry = -1
 
                     try:
+                        sector = -1
                         if label_element.text == "Sector":
                             value_element = label_element.find_element_by_xpath('following-sibling::span')
                             sector = value_element.text
@@ -160,6 +165,7 @@ def get_jobs(keyword, num_jobs, verbose, path, slp_time):
                         sector = -1
 
                     try:
+                        revenue = -1
                         if label_element.text == "Revenue":
                             value_element = label_element.find_element_by_xpath('following-sibling::span')
                             revenue = value_element.text
