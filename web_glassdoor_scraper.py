@@ -28,30 +28,33 @@ def get_jobs(keyword, num_jobs, verbose, path, slp_time):
     driver.get(url)
     jobs = []
 
+
+    #Test for the "Sign Up" prompt and get rid of it.
+    try:
+        driver.find_element_by_class_name("eigr9kq4").click()
+        print(' selected out worked')
+    except ElementClickInterceptedException:
+        pass
+
+    time.sleep(.1)
+
+    try:
+    
+        wait = WebDriverWait(driver, 30)
+        element = wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, '[alt="Close"]')))
+        element.click()  #clicking to the X.
+        print(' x out worked')
+    except NoSuchElementException:
+        print(' x out failed')
+        pass
+
     while len(jobs) < num_jobs:  #If true, should be still looking for new jobs.
 
         #Let the page load. Change this number based on your internet speed.
         #Or, wait until the webpage is loaded, instead of hardcoding it.
         time.sleep(slp_time)
 
-        #Test for the "Sign Up" prompt and get rid of it.
-        try:
-            driver.find_element_by_class_name("eigr9kq4").click()
-            print(' selected out worked')
-        except ElementClickInterceptedException:
-            pass
-
-        time.sleep(.1)
-
-        try:
         
-            wait = WebDriverWait(driver, 50)
-            element = wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, '[alt="Close"]')))
-            element.click()  #clicking to the X.
-            print(' x out worked')
-        except NoSuchElementException:
-            print(' x out failed')
-            pass
 
         
         #Going through each job in this page
@@ -64,7 +67,7 @@ def get_jobs(keyword, num_jobs, verbose, path, slp_time):
                 break
 
             job_button.click()  #You might 
-            time.sleep(2)
+            time.sleep(1)
             collected_successfully = False
             
             while not collected_successfully:
@@ -75,6 +78,7 @@ def get_jobs(keyword, num_jobs, verbose, path, slp_time):
                     job_description = driver.find_element_by_xpath('//div[@class="jobDescriptionContent desc"]').text
                     collected_successfully = True
                 except:
+                    collected_successfully = True
                     print('while failed')
                     time.sleep(5)
 
