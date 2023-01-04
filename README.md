@@ -54,3 +54,26 @@ After scraping the data, I needed to clean it up so that it was usable for our m
 ## EDA
 I looked at the distributions of the data and the value counts for the various categorical variables. Below are a few highlights from the pivot tables.
 
+![alt text](https://github.com/AswanthAnu/ds_salary_proj/blob/main/salary_by_position.png "Salary by Position")
+![alt text](https://github.com/AswanthAnu/ds_salary_proj/blob/main/job_position_by_state.png "Job Opportunities by State")
+![alt text](https://github.com/AswanthAnu/ds_salary_proj/blob/main/job_position_by_state.png "Correlations")
+
+## Model Building 
+
+First, I transformed the categorical variables into dummy variables. I also split the data into train and tests sets with a test size of 20%.   
+
+I tried three different models and evaluated them using Mean Absolute Error. I chose MAE because it is relatively easy to interpret and outliers aren’t particularly bad in for this type of model.   
+
+I tried three different models:
+*	**Multiple Linear Regression** – Baseline for the model
+*	**Lasso Regression** – Because of the sparse data from the many categorical variables, I thought a normalized regression like lasso would be effective.
+*	**Random Forest** – Again, with the sparsity associated with the data, I thought that this would be a good fit. 
+
+## Model performance
+The Random Forest model far outperformed the other approaches on the test and validation sets. 
+*	**Random Forest** : MAE = 11.41
+*	**Linear Regression**: MAE = 21.19
+*	**Lasso Regression**: MAE = 18.77
+
+## Productionization 
+In this step, I built a flask API endpoint that was hosted on a local webserver by following along with the TDS tutorial in the reference section above. The API endpoint takes in a request with a list of values from a job listing and returns an estimated salary. 
